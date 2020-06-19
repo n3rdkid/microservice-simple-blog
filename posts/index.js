@@ -3,9 +3,10 @@ import cors from "cors";
 import { randomBytes } from "crypto";
 const app = express();
 
-app.use(cors());
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cors());
 const posts = {};
 
 app.get("/posts", (req, res) => {
