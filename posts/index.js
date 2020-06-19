@@ -10,6 +10,7 @@ app.use(cors());
 const posts = {};
 
 app.get("/posts", (req, res) => {
+    console.log(posts);
     return res.status(200).json(posts);
 })
 app.post("/posts", (req, res) => {
