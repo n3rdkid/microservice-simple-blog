@@ -13,7 +13,7 @@ app.get("/posts/:id/comments", (req, res) => {
 
     return res.status(200).json(commentsByPostsId[req.params.id] || []);
 })
-app.post("/posts/:id/comments", async (req, res) => {
+app.post("/posts/:id/comments", async(req, res) => {
     const commentId = randomBytes(4).toString('hex');
     const { body } = req.body;
     const comments = commentsByPostsId[req.params.id] || []

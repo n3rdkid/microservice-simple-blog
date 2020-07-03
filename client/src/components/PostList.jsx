@@ -7,7 +7,7 @@ export default () => {
 
     const fetchPosts = async () => {
         try {
-            const { data } = await axios.get("http://localhost:4000/posts");
+            const { data } = await axios.get("http://localhost:5002/posts");
             setPosts(data);
         } catch (error) {
 
@@ -19,7 +19,7 @@ export default () => {
     const renderedPosts = Object.values(posts).map(post => <div key={post.id} className="card w-30 mb-5"><div className="card-body">
         <h3>{post.title}</h3>
     </div>
-        <CommentList postId={post.id} />
+        <CommentList comments={post.comments} />
         <hr />
         <CommentCreate postId={post.id} />
     </div>);
