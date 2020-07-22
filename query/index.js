@@ -43,7 +43,7 @@ const port = process.env.PORT || 5002;
 
 app.listen(port, async() => {
     console.log(`Query service is listening at ${port}`);
-    const { data } = await axios.get("http://localhost:5001/events");
+    const { data } = await axios.get("http:///event-bus-srv:5001/events");
     for (let event of data) {
         console.log(event.type)
     }

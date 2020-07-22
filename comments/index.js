@@ -19,8 +19,8 @@ app.post("/posts/:id/comments", async(req, res) => {
     const comments = commentsByPostsId[req.params.id] || []
     comments.push({ id: commentId, body, status: 'pending' })
     commentsByPostsId[req.params.id] = comments;
-    await axios.post("http://localhost:4003/events", { type: "CommentCreated", data: { id: commentId, body, postId: req.params.id, status: 'pending' } })
-    await axios.post("http://localhost:5001/events", { type: "CommentCreated", data: { id: commentId, body, postId: req.params.id, status: 'pending' } })
+    await axios.post("http://moderation-srv:4003/events", { type: "CommentCreated", data: { id: commentId, body, postId: req.params.id, status: 'pending' } })
+    await axios.post("http://event-bus-srv:5001/events", { type: "CommentCreated", data: { id: commentId, body, postId: req.params.id, status: 'pending' } })
     res.status(201).json(comments);
 
 })
@@ -34,7 +34,7 @@ app.post("/events", async(req, res) => {
         const comments = commentsByPostsId[postId];
         const comment = comments.find(comment => comment.id === id)
         comment.status = status;
-        await axios.post("http://localhost:5001/events", {
+        await axios.post("http://event-bus-srv:5001/events", {
             type: "CommentUpdated",
             data: {
                 id,

@@ -21,7 +21,12 @@ app.post("/posts", async(req, res) => {
         id,
         title
     }
-    await axios.post("http://localhost:5001/events", { type: "PostCreated", data: { id, title } })
+    try {
+        await axios.post("http://event-bus-srv:5001/events", { type: "PostCreated", data: { id, title } })
+    } catch (e) {
+        console.log("Failed to report error")
+    }
+
     res.status(201).json(posts[id]);
 
 })
@@ -32,6 +37,7 @@ app.post("/events", (req, res) => {
 });
 const port = process.env.PORT || 4000;
 app.listen(port, (err) => {
+    console.log("v55")
     if (err) {
         return "Server couldn't start!"
     }
