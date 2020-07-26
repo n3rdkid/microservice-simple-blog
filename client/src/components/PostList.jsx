@@ -7,8 +7,8 @@ export default () => {
 
     const fetchPosts = async () => {
         try {
-            const { data } = await axios.get("http://localhost:5002/posts");
-            console.log(data);
+            const { data } = await axios.get("http://posts.com/posts");
+            console.log("Data from query",data);
             setPosts(data);
         } catch (error) {
 

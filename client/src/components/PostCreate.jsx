@@ -6,8 +6,8 @@ export default () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const { data } = await axios.post("http://localhost:4000/posts", { title });
-            console.log(data)
+            const { data } = await axios.post("http://posts.com/posts/create", { title });
+            console.log("POST CREATED", data)
         } catch (e) {
             console.error("Error occured while adding comment")
         }

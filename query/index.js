@@ -12,6 +12,7 @@ app.use(cors())
 const posts = {}
 
 const handleEvent = ({ type, data }) => {
+    console.log(type)
     if (type === 'PostCreated') {
         const { id, title } = data;
         posts[id] = { id, title, comments: [] }
@@ -34,7 +35,8 @@ app.get("/posts", (req, res) => {
 
 app.post("/events", (req, res) => {
     const { type, data } = req.body;
-    handleEvent(type, data);
+    handleEvent({ type, data });
+    console.log("EVENT HANDLED")
     res.status(200).send("DONE")
 
 })
@@ -43,8 +45,12 @@ const port = process.env.PORT || 5002;
 
 app.listen(port, async() => {
     console.log(`Query service is listening at ${port}`);
-    const { data } = await axios.get("http:///event-bus-srv:5001/events");
+    const { data } = await axios.get("http://event-bus-srv:5001/events");
     for (let event of data) {
-        console.log(event.type)
+        console.log('Processing event:', event.type);
+        handleEvent({ type: event.type, data: event.data });
     }
+    console.log("post now")
+    console.log(posts)
+
 })
